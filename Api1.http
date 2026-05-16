@@ -3,4 +3,11 @@
 GET {{Api1_HostAddress}}/weatherforecast/
 Accept: application/json
 
+/// ### Create a new category ###
+POST {{Api1_HostAddress}}/categories
+Content-Type: application/json
+{
+  "name": "New Category"
+}
+
 ###

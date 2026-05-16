@@ -147,3 +147,6 @@ C:\Users\Xanim\Desktop\Api1\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
 C:\Users\Xanim\Desktop\Api1\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\Xanim\Desktop\Api1\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
 C:\Users\Xanim\Desktop\Api1\bin\Debug\net8.0\Scalar.AspNetCore.dll
+C:\Users\Xanim\Desktop\Api1\bin\Debug\net8.0\FluentValidation.dll
+C:\Users\Xanim\Desktop\Api1\bin\Debug\net8.0\FluentValidation.DependencyInjectionExtensions.dll
+C:\Users\Xanim\Desktop\Api1\bin\Debug\net8.0\Newtonsoft.Json.dll
