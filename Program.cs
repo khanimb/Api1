@@ -34,6 +34,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.MapControllers();
+app.UseAuthorization();
+app.UseAuthentication();
 app.MapGet("/", () => "Hello World!");
 
 app.Run();

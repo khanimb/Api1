@@ -3,6 +3,7 @@ using Api1.Dtos.Categories;
 using Api1.Extensions;
 using Api1.Models;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +12,11 @@ namespace Api1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController(AppDbContext appDbContext, IMapper mapper) : ControllerBase
+    public class CategoryController(
+        AppDbContext appDbContext,
+        IMapper mapper,
+        IValidator<CategoryCreateDto> createValidator
+        ) : ControllerBase
     {
         [HttpGet]
         public IActionResult Get()
@@ -37,15 +42,25 @@ namespace Api1.Controllers
             return Ok(category);
         }
         [HttpPost]
-        public IActionResult Post(CategoryCreateDto categoryCreateDto)
+        public IActionResult Post([FromForm] CategoryCreateDto categoryCreateDto)
         {
+            if (categoryCreateDto == null) return BadRequest();
+            var validationResult = createValidator.Validate(categoryCreateDto);
+            if (validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors.Select(error => new
+                {
+                    error.PropertyName,
+                    error.ErrorMessage
+                }));
+            }
             var newCategory = mapper.Map<Category>(categoryCreateDto);
             appDbContext.Categories.Add(newCategory);
             appDbContext.SaveChanges();
             return Ok();
         }
         [HttpPut("{id}")]
-        public IActionResult Put(int id, CategoryUpdateDto categoryUpdateDto)
+        public IActionResult Put([FromRoute] int id,[FromBody] CategoryUpdateDto categoryUpdateDto)
         {
             var existingCategory = appDbContext.Categories.Find(id);
             if (existingCategory == null)

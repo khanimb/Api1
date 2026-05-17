@@ -1,5 +1,8 @@
 ﻿using Api1.Data;
+using Api1.Models;
 using Api1.Profiles;
+using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api1
@@ -15,6 +18,17 @@ namespace Api1
             services.AddSwaggerGen();
             services.AddHttpContextAccessor();
             services.AddAutoMapper(opt => opt.AddProfile(new MapperProfile(new HttpContextAccessor())));
+            services.AddValidatorsFromAssemblyContaining<Program>();
+            services.AddIdentity<AppUser, IdentityRole>(opt =>
+            {
+                opt.Password.RequireDigit = true;
+                opt.Password.RequireLowercase = true;
+                opt.Password.RequireNonAlphanumeric = true;
+                opt.Password.RequireUppercase = true;
+                opt.Password.RequiredLength = 6;
+            })
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
         }
     }
 }

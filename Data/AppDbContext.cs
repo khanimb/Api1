@@ -1,9 +1,10 @@
 ﻿using Api1.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api1.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<AppUser>
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
